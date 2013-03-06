@@ -3,7 +3,7 @@ package com.laurent.game;
 import com.laurent.framework.Image;
 import com.laurent.framework.Input.TouchEvent;
 
-public class Paddle extends Sprite {
+public class Paddle extends Rect {
 	private double dy;
 	private double speed = 10;
 	

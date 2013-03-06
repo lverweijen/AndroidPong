@@ -2,16 +2,16 @@ package com.laurent.game;
 
 import com.laurent.framework.Image;
 
-public class Sprite {
+public class Rect {
 	public Image image;
 	protected double x, y;
 	
-	public Sprite(Image image, double x, double y) {
+	public Rect(Image image, double x, double y) {
 		this.image = image;
 		this.x = x; this.y = y;
 	}
 	
-	public boolean collide(Sprite other) {
+	public boolean collide(Rect other) {
 		return (this.getLeft() <= other.getRight() &&
 				other.getLeft()<= this.getRight() &&
 				this.getTop() <= other.getBottom() &&

@@ -5,7 +5,7 @@ import com.laurent.framework.Image;
 
 import android.R.anim;
 
-public class Ball extends Sprite {
+public class Ball extends Rect {
 	public double dx, dy;
 	private Game game;
 	private double speed = 1.5;
