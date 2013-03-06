@@ -1,4 +1,4 @@
 AndroidPong
 ===========
 
-Android version of poing
+Android version of pong
