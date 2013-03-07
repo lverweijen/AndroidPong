@@ -25,7 +25,12 @@ public class MainMenuScreen extends Screen {
         for(TouchEvent event: game.getInput().getTouchEvents()) {
         	if (event.type == TouchEvent.TOUCH_UP) { // && inBounds(event, 0, 0, 250, 250)) {
                 //game.setScreen(new GameScreen(game));
-                game.setScreen(new Pong(game));
+        		
+        		// Single player or multiplayer
+        		if(event.y < game.getGraphics().getHeight() / 2)
+        			game.setScreen(new SinglePlayer(game));
+        		else
+        			game.setScreen(new MultiPlayer(game));
             }        	
         }
         

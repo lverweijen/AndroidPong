@@ -13,7 +13,7 @@ import com.laurent.framework.Graphics.ImageFormat;
 import com.laurent.framework.Input.TouchEvent;
 import com.laurent.framework.implementation.AndroidGraphics;
 
-public class Pong extends Screen{
+public abstract class Pong extends Screen{
 	Ball ball;
 	Paddle[] paddles = new Paddle[2];
 	int[] scores = new int[2];
@@ -21,41 +21,32 @@ public class Pong extends Screen{
 	double score1, score2;
 	
 	Paint scorePaint;//
+	boolean isMultiplayer;
 
 	public Pong(Game game) {
 		super(game);
 		System.out.println("Pong started");
 		
-		double yStart = game.getGraphics().getHeight() / 2 - Assets.paddle.getHeight() / 2;
-		double x2 = game.getGraphics().getWidth() - Assets.paddle.getWidth();
-		
 		ball = new Ball(game);
-		paddles[0] = new Paddle(0, yStart, 10);
-		paddles[1] = new Paddle(x2, yStart, 2);
 		
 		scorePaint = new Paint();
 		scorePaint.setTextSize(30);
 		scorePaint.setTextAlign(Align.CENTER);
 		scorePaint.setAntiAlias(true);
 		scorePaint.setColor(Color.WHITE);
+		
+		// Paddles need to be created by subclass!!!
+		createPaddles();
 	}
+	
+	abstract void createPaddles();
 
 	@Override
 	public void update(float deltaTime) {
 		
-		for(TouchEvent event: game.getInput().getTouchEvents()) {
-			switch(event.type){
-			case TouchEvent.TOUCH_DRAGGED:
-			case TouchEvent.TOUCH_DOWN:
-				paddles[0].follow(event.y);
-				break;
-			case TouchEvent.TOUCH_UP:
-				paddles[0].stop();
-				break;
-			}
-        }
+		// Move the paddles 
+		handleInput();
 		
-		paddles[1].follow(ball.getCenterY());
 		ball.update(deltaTime);
 		
 		for(Paddle paddle: paddles) {
@@ -67,23 +58,18 @@ public class Pong extends Screen{
 			}
 		}
 		
-		boolean ballLeft = false;
-		
 		if(ball.getRight() > game.getGraphics().getWidth()) {
 			scores[0]++;
-			ballLeft = true;
+			ball.respawn((game.getGraphics().getWidth() - ball.getWidth()) / 2);
 		}
 		
 		if(ball.getLeft() < 0) {
 			scores[1]++;
-			ballLeft = true;
-		}
-		
-		if(ballLeft) {
 			ball.respawn((game.getGraphics().getWidth() - ball.getWidth()) / 2);
-			//ball.decreaseSpeed();
 		}
 	}
+	
+	abstract void handleInput();
 
 	@Override
 	public void paint(float deltaTime) {
