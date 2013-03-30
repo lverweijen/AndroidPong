@@ -52,7 +52,7 @@ public abstract class Pong extends Screen{
 		for(Paddle paddle: paddles) {
 			paddle.update(deltaTime);
 			
-			if(paddle.collide(ball)) {
+			if(paddle.collides(ball)) {
 				ball.bounceHorizontally();
 				ball.increaseSpeed();
 			}

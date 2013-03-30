@@ -1,10 +1,8 @@
 package com.laurent.game;
 
-import com.laurent.framework.Image;
-import com.laurent.framework.Input.TouchEvent;
+import com.laurent.sprite.Rect;
 
 public class Paddle extends Rect {
-	private double dy;
 	private double followY;
 	private double speed = 10;
 	
@@ -14,26 +12,11 @@ public class Paddle extends Rect {
 		followY = getCenterY();
 	}
 	
-	public void update(double deltaTime) {
-		
-		if (Math.abs(followY - getCenterY()) < speed)
-		{
-			y = followY - image.getHeight() / 2;
-			dy = 0;
-		}
-		else if(followY > getCenterY())
-			dy = speed;
-		else
-			dy = -speed;
-		
-		this.y += this.dy * deltaTime;
-	}
-	
-	/**
-	 * Stops the paddle from moving
-	 */
-	public void stop() {
-		this.dy = 0;
+	public void update(double deltaTime) {		
+		double step = deltaTime * speed;
+		double diff = followY - getCenterY();
+		double move = Math.min(step, Math.abs(diff)) * Math.signum(diff);
+		move(0, move);
 	}
 	
 	/**

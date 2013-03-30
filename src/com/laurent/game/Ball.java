@@ -2,6 +2,7 @@ package com.laurent.game;
 
 import com.laurent.framework.Game;
 import com.laurent.framework.Image;
+import com.laurent.sprite.Rect;
 
 import android.R.anim;
 
@@ -17,8 +18,8 @@ public class Ball extends Rect {
 	}
 	
 	public void update(double timeFloat) {
-		x += speed * timeFloat * dx;
-		y += speed * timeFloat * dy;
+		left += speed * timeFloat * dx;
+		top += speed * timeFloat * dy;
 
 		int width = game.getGraphics().getWidth();
 		int height = game.getGraphics().getHeight();
@@ -38,7 +39,7 @@ public class Ball extends Rect {
 	}
 
 	public void respawn(double xPos) {
-		x = xPos;
+		left = xPos;
 		dx = -dx;
 	}
 
